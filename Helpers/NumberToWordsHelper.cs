@@ -1,6 +1,6 @@
 using System;
 
-namespace FurnitureProject.Helpers
+namespace RandomClasses.Helpers
 {
     public static class NumberToWordsHelper
     {
