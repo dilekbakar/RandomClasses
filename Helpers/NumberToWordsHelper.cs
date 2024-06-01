@@ -2,6 +2,7 @@ using System;
 
 namespace RandomClasses.Helpers
 {
+   //NumberToWordsHelper will help us create dynamic structures in the view section.
     public static class NumberToWordsHelper
     {
         private static readonly string[] words =
