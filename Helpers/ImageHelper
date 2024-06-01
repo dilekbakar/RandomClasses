@@ -1,0 +1,39 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace RandomClasses.Helpers
+{
+public class ImageHelper
+ {
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+    public ImageHelper(IWebHostEnvironment hostEnvironment)
+    {
+        _hostEnvironment = hostEnvironment;
+    }
+
+    public async Task<string> UploadImageAsync(IFormFile image)
+    {
+        if (image == null || image.Length == 0)
+        {
+            return null;
+        }
+
+        string uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "images");
+        string uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+        string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+        Directory.CreateDirectory(uploadsFolder); // Ensure the folder exists
+
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
+        {
+            await image.CopyToAsync(fileStream);
+        }
+
+        return "/images/" + uniqueFileName;
+    }
+ }
+}
